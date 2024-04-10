@@ -9,8 +9,11 @@
         "require": "./dist/cjs/index.cjs"
     },
     "scripts": {
-        "build:cjs": "babel src --out-dir dist/cjs --copy-files",
-        "build:esm": "cp -r src/* dist/esm/",
+        "clean": "rm -rf dist",
+        "build:cjs": "babel src --out-dir dist/cjs --copy-files --out-file-extension .cjs",
+        "build:esm": "mkdir -p dist/esm/ && cp -r src/* dist/esm/",
+        "build": "npm run build:cjs && npm run build:esm",
+        "clean-build": "npm run clean && npm run build",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [
