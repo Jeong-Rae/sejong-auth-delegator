@@ -27,10 +27,8 @@ class AuthService {
         if (!this.jsessionId) {
             await this.fetchJsessionId();
         }
-        console.log("Using JSESSIONID:", this.jsessionId);
 
         const completeRequestUrl = `${this.resourceEndpoint}?userId=${loginRequestDto.userId}&password=${loginRequestDto.password}`;
-        console.log(completeRequestUrl);
 
         try {
             const loginResponse = await fetch(completeRequestUrl, {
