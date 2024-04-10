@@ -129,7 +129,7 @@ SejongAuthDelegator는 세종대학교의 인증 시스템을 위해 개발된 �
 npm에 배포되어 있는 라이브러리를 install 하여 사용하는 것이 권장된다.
 
 ```shell
-npm install sejongAuthDelegator
+npm i @coffee-tree/sejong-auth-delegator
 ```
 
 # 사용예시
@@ -139,7 +139,8 @@ npm install sejongAuthDelegator
 ## CJS
 
 ```js
-const sejongAuthDelegator = require("sejongAuthDelegator");
+const sejongAuthDelegator =
+    require("@coffee-tree/sejong-auth-delegator").default;
 
 const delegator = sejongAuthDelegator();
 
@@ -162,7 +163,7 @@ delegator
 ## ESM
 
 ```js
-import sejongAuthDelegator from "sejongAuthDelegator";
+import sejongAuthDelegator from "@coffee-tree/sejong-auth-delegator";
 
 const delegator = sejongAuthDelegator();
 
