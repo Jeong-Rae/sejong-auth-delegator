@@ -29,6 +29,7 @@ node_modules/
 .env
 .env.test
 .env.production
+.npmignore
 
 # 커버리지 보고서
 coverage/
