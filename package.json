@@ -2,8 +2,15 @@
     "name": "sejong-auth-delegator",
     "version": "1.0.0",
     "description": "세종대학교 SSO을 통한 학생인증 대행을 수행하는 모듈",
-    "main": "index.js",
+    "main": "dist/cjs/index.js",
+    "module": "dist/esm/index.js",
+    "exports": {
+        "import": "./dist/esm/index.js",
+        "require": "./dist/cjs/index.js"
+    },
     "scripts": {
+        "build:cjs": "babel src --out-dir dist/cjs --copy-files",
+        "build:esm": "cp -r src/* dist/esm/",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [
@@ -14,5 +21,10 @@
     "type": "module",
     "dependencies": {
         "cheerio": "^1.0.0-rc.12"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.24.1",
+        "@babel/core": "^7.24.4",
+        "@babel/preset-env": "^7.24.4"
     }
 }
