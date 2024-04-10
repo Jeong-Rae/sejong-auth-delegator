@@ -1,6 +1,6 @@
-import AuthController from "./controllers/AuthController.js";
-import AuthService from "./services/AuthService.js";
-import UserProfileService from "./services/UserProfileService.js";
+import AuthController from "./controller/AuthController.js";
+import AuthService from "./service/AuthService.js";
+import UserProfileService from "./service/UserProfileService.js";
 import LoginRequestDto from "./dto/LoginRequestDto.js";
 
 function sejongAuthDelegator() {
