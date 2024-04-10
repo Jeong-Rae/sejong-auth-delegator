@@ -33,8 +33,6 @@ class UserProfileService {
 
         const profileResponseDto = new ProfileResponseDto(...profileData);
 
-        console.log(profileResponseDto);
-
         return profileResponseDto;
     }
 }
