@@ -138,49 +138,114 @@ npm i @coffee-tree/sejong-auth-delegator
 
 ## CJS
 
+### Then 방식
+
 ```js
 const sejongAuthDelegator =
     require("@coffee-tree/sejong-auth-delegator").default;
 
+const app = express();
 const delegator = sejongAuthDelegator();
 
-const loginRequestDto = delegator.createLoginRequestDto("username", "password");
-/* js에서는 단순 리터럴 객체를 사용하여 전달 할 수도 있습니다.
-ex)
-const loginRequestDto = {userId: username, password: password};
-*/
+/* Then 방식 */
+app.get("/user/profile", (req, res) => {
+    const loginRequestDto = delegator.createLoginRequestDto(
+        "userId",
+        "password"
+    );
 
-delegator
-    .getUserProfile(loginRequestDto)
-    .then((userProfile) => {
-        console.log("User Profile:", userProfile);
-    })
-    .catch((error) => {
-        console.error(error);
-    });
+    delegator
+        .getUserProfile(loginRequestDto)
+        .then((userProfile) => {
+            res.status(200).json(userProfile);
+        })
+        .catch((error) => {
+            res.status(500).json({
+                message: "Error fetching user profile",
+                error,
+            });
+        });
+});
+```
+
+### Async 방식
+
+```js
+const sejongAuthDelegator =
+    require("@coffee-tree/sejong-auth-delegator").default;
+
+const app = express();
+const delegator = sejongAuthDelegator();
+
+/* Async 방식 */
+app.get("/user/profile", async (req, res) => {
+    const loginRequestDto = delegator.createLoginRequestDto(
+        "userId",
+        "password"
+    );
+
+    try {
+        const userProfile = await delegator.getUserProfile(loginRequestDto);
+        res.status(200).json(userProfile);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching user profile", error });
+    }
+});
 ```
 
 ## ESM
 
+### Then 방식
+
 ```js
+import express from "express";
 import sejongAuthDelegator from "@coffee-tree/sejong-auth-delegator";
 
+const app = express();
 const delegator = sejongAuthDelegator();
 
-const loginRequestDto = delegator.createLoginRequestDto("username", "password");
-/* js에서는 단순 리터럴 객체를 사용하여 전달 할 수도 있습니다.
-ex)
-const loginRequestDto = {userId: username, password: password};
-*/
+app.get("/user/profile", (req, res) => {
+    const loginRequestDto = delegator.createLoginRequestDto(
+        "userId",
+        "password"
+    );
 
-delegator
-    .getUserProfile(loginRequestDto)
-    .then((userProfile) => {
-        console.log("User Profile:", userProfile);
-    })
-    .catch((error) => {
-        console.error(error);
-    });
+    delegator
+        .getUserProfile(loginRequestDto)
+        .then((userProfile) => {
+            res.status(200).json(userProfile);
+        })
+        .catch((error) => {
+            res.status(500).json({
+                message: "Error fetching user profile",
+                error,
+            });
+        });
+});
+```
+
+### Async 방식
+
+```js
+import express from "express";
+import sejongAuthDelegator from "@coffee-tree/sejong-auth-delegator";
+
+const app = express();
+const delegator = sejongAuthDelegator();
+
+app.get("/user/profile", async (req, res) => {
+    const loginRequestDto = delegator.createLoginRequestDto(
+        "userId",
+        "password"
+    );
+
+    try {
+        const userProfile = await delegator.getUserProfile(loginRequestDto);
+        res.status(200).json(userProfile);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching user profile", error });
+    }
+});
 ```
 
 # 이슈등록
