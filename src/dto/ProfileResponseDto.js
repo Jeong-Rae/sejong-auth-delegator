@@ -32,6 +32,10 @@ class ProfileResponseDto {
             verifiedSemesters: this.verifiedSemesters,
         };
     }
+
+    serialize() {
+        return JSON.stringify(this.toObject());
+    }
 }
 
 export default ProfileResponseDto;
