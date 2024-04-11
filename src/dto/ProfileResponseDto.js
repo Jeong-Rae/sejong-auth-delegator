@@ -20,6 +20,18 @@ class ProfileResponseDto {
     extractNumber(semesterString) {
         return parseInt(semesterString.split(" ")[0], 10);
     }
+
+    toObject() {
+        return {
+            major: this.major,
+            studentCode: this.studentCode,
+            name: this.name,
+            gradeLevel: this.gradeLevel,
+            userStatus: this.userStatus,
+            completedSemesters: this.completedSemesters,
+            verifiedSemesters: this.verifiedSemesters,
+        };
+    }
 }
 
 export default ProfileResponseDto;
