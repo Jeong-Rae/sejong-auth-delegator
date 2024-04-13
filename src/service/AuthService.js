@@ -4,7 +4,6 @@ class AuthService {
         this.jsessionId = null;
     }
 
-    // JSESSIONID 획득
     async fetchJsessionId() {
         try {
             const response = await fetch("http://classic.sejong.ac.kr", {
@@ -13,7 +12,7 @@ class AuthService {
             const cookieHeader = response.headers.get("set-cookie");
             this.jsessionId = this.extractJsessionIdFromCookie(cookieHeader);
         } catch (error) {
-            console.error(error);
+            throw new Error("Failed : failed to fetch JSESSIONID");
         }
     }
 
@@ -22,7 +21,6 @@ class AuthService {
         return matches ? matches[1] : null;
     }
 
-    // 로그인 인가
     async authenticate(loginRequestDto) {
         if (!this.jsessionId) {
             await this.fetchJsessionId();
@@ -41,12 +39,12 @@ class AuthService {
 
             const responseBody = await loginResponse.text();
 
-            if (responseBody.includes("접속자 정보")) {
-                return true;
+            if (!responseBody.includes("접속자 정보")) {
+                throw new Error("Failed: Login");
             }
-            return false;
+            return true;
         } catch (error) {
-            console.error(error);
+            throw new Error("Failed : login failed");
         }
     }
 

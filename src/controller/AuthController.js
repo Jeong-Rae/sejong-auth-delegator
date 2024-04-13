@@ -13,13 +13,14 @@ class AuthController {
 
     async login(loginRequestDto) {
         const isAuthenticated = await this.authenticate(loginRequestDto);
-        if (isAuthenticated) {
-            const response = await this.userProfileService.fetchUserProfile(
-                this.authService.jsessionId
-            );
-            return response;
+        if (!isAuthenticated) {
+            throw new Error("Login failed: User authentication failed");
         }
-        return null;
+
+        const response = await this.userProfileService.fetchUserProfile(
+            this.authService.jsessionId
+        );
+        return response;
     }
 }
 
