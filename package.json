@@ -1,6 +1,6 @@
 {
     "name": "@coffee-tree/sejong-auth-delegator",
-    "version": "1.0.9",
+    "version": "1.1.0",
     "description": "세종대학교 SSO을 통한 학생인증 대행을 수행하는 모듈",
     "main": "dist/cjs/index.js",
     "module": "dist/esm/index.js",
