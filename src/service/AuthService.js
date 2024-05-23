@@ -38,7 +38,6 @@ class AuthService {
             });
 
             const responseBody = await loginResponse.text();
-            console.log(responseBody);
 
             if (responseBody.includes("로그인 정보가 올바르지 않습니다.")) {
                 throw new Error("Failed: Login");
