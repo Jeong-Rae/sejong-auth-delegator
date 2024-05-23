@@ -31,4 +31,5 @@ function sejongAuthDelegator() {
     };
 }
 
+export default sejongAuthDelegator;
 export { LoginRequestDto, sejongAuthDelegator };
