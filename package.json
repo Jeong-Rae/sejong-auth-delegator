@@ -14,7 +14,7 @@
         "build:esm": "mkdir -p dist/esm/ && cp -r src/* dist/esm/",
         "build": "npm run build:cjs && npm run build:esm",
         "clean-build": "npm run clean && npm run build",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "node ./test/AuthTest.js"
     },
     "keywords": [
         "sejong",

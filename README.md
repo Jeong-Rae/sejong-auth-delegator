@@ -16,6 +16,7 @@
     -   [CJS](#cjs)
     -   [ESM](#esm)
 -   [이슈등록](#이슈등록)
+    -   [패치내역](#패치내역)
 
 # 소개
 
@@ -141,114 +142,115 @@ npm i @coffee-tree/sejong-auth-delegator
 ### Then 방식
 
 ```js
-const sejongAuthDelegator =
-    require("@coffee-tree/sejong-auth-delegator").default;
+const {
+    sejongAuthDelegator,
+    LoginRequestDto,
+} = require("@coffee-tree/sejong-auth-delegator");
 
-const app = express();
-const delegator = sejongAuthDelegator();
+const login = (userId, password) => {
+    const delegator = sejongAuthDelegator();
 
-/* Then 방식 */
-app.get("/user/profile", (req, res) => {
-    const loginRequestDto = delegator.createLoginRequestDto(
-        "userId",
-        "password"
-    );
+    const loginRequestDto = new LoginRequestDto(userId, password);
 
-    delegator
+    const profile = delegator
         .getUserProfile(loginRequestDto)
         .then((userProfile) => {
-            res.status(200).json(userProfile);
+            return userProfile;
         })
         .catch((error) => {
-            res.status(500).json({
-                message: "Error fetching user profile",
-                error,
-            });
+            console.error("Error fetching user profile", error);
+            throw error;
         });
-});
+
+    return profile;
+};
 ```
 
-### Async 방식
+### Async/Await 방식
 
 ```js
-const sejongAuthDelegator =
-    require("@coffee-tree/sejong-auth-delegator").default;
+const {
+    sejongAuthDelegator,
+    LoginRequestDto,
+} = require("@coffee-tree/sejong-auth-delegator");
 
-const app = express();
-const delegator = sejongAuthDelegator();
+const login = (userId, password) => {
+    const delegator = sejongAuthDelegator();
 
-/* Async 방식 */
-app.get("/user/profile", async (req, res) => {
-    const loginRequestDto = delegator.createLoginRequestDto(
-        "userId",
-        "password"
-    );
+    const loginRequestDto = new LoginRequestDto(userId, password);
 
     try {
         const userProfile = await delegator.getUserProfile(loginRequestDto);
-        res.status(200).json(userProfile);
+        return userProfile;
     } catch (error) {
-        res.status(500).json({ message: "Error fetching user profile", error });
+        console.error("Error fetching user profile", error);
+        throw error;
     }
-});
+};
 ```
 
 ## ESM
 
-### Then 방식
+### Promise 방식
 
 ```js
-import express from "express";
-import sejongAuthDelegator from "@coffee-tree/sejong-auth-delegator";
+import {
+    sejongAuthDelegator,
+    LoginRequestDto,
+} from "@coffee-tree/sejong-auth-delegator";
 
-const app = express();
-const delegator = sejongAuthDelegator();
+const login = (userId, password) => {
+    const delegator = sejongAuthDelegator();
 
-app.get("/user/profile", (req, res) => {
-    const loginRequestDto = delegator.createLoginRequestDto(
-        "userId",
-        "password"
-    );
+    const loginRequestDto = new LoginRequestDto(userId, password);
 
-    delegator
+    const profile delegator
         .getUserProfile(loginRequestDto)
         .then((userProfile) => {
-            res.status(200).json(userProfile);
+            return userProfile;
         })
         .catch((error) => {
-            res.status(500).json({
-                message: "Error fetching user profile",
-                error,
-            });
+            console.error("Error fetching user profile", error);
+            throw error;
         });
-});
+
+    return profile;
+};
 ```
 
-### Async 방식
+### Async/Await 방식
 
 ```js
-import express from "express";
-import sejongAuthDelegator from "@coffee-tree/sejong-auth-delegator";
+import {
+    sejongAuthDelegator,
+    LoginRequestDto,
+} from "@coffee-tree/sejong-auth-delegator";
 
-const app = express();
-const delegator = sejongAuthDelegator();
+const login = (userId, password) => {
+    const delegator = sejongAuthDelegator();
 
-app.get("/user/profile", async (req, res) => {
-    const loginRequestDto = delegator.createLoginRequestDto(
-        "userId",
-        "password"
-    );
+    const loginRequestDto = new LoginRequestDto(userId, password);
 
     try {
-        const userProfile = await delegator.getUserProfile(loginRequestDto);
-        res.status(200).json(userProfile);
+        const profile = await delegator.getUserProfile(loginRequestDto);
+        return profile;
     } catch (error) {
-        res.status(500).json({ message: "Error fetching user profile", error });
+        console.error("Error fetching user profile", error);
+        throw error;
     }
-});
+};
 ```
 
 # 이슈등록
 
 코드에 오류 및 개선사항이 있을 경우 해당 저정소에 이슈를 남겨주시면 감사합니다  
 [`sejong-auth-delegator-github`](https://github.com/Jeong-Rae/sejong-auth-delegator/issues)
+
+# 패치내역
+
+### 2024-05-23
+
+-   로그인 성공 판단 기준을 변경하였습니다
+-   TEST 검증 코드를 추가하였습니다.
+-   `LoginRequestDTO` 클래스를 직접 반환받아 사용할 수 있게 하였습니다.
+-   README 예시 코드를 변경하였습니다.
